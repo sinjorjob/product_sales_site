@@ -1,6 +1,6 @@
 # ECショップと簡単な販売管理機能のDjangoデモサイト
 
-## 必要な序ジュールのインストール
+## 必要なモジュールのインストール
 
 ```console
 pip install -r requirements.txt
@@ -44,13 +44,19 @@ python manage.py loaddata --format=yaml ec_site/fixtures/sample_data.yaml
 
 以下のようなECショップサイト機能
 
+![demo](https://github.com/sinjorjob/product_sales_site/blob/master/images/ec-shop.gif)
+
 ## Paypalを使った決済機能
+![demo](https://github.com/sinjorjob/product_sales_site/blob/master/images/ec-shop-kessai_1.gif)
 
 
 ## 出荷状態を管理する管理機能
+![demo](https://github.com/sinjorjob/product_sales_site/blob/master/images/ec-shop-management.gif)
 
 
 
 ## 簡単な売上分析機能
 描画にはplotly exporessを利用
+![demo](https://github.com/sinjorjob/product_sales_site/blob/master/images/ec-shop-analysis.gif)
+
 
