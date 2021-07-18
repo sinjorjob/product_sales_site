@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    
+    <title>ECサイト</title>
+<style>
+    .sliderArea {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 25px;
+      }
+      .sliderArea.w300 {
+        max-width: 300px;
+      }
+      .slick-slide {
+        margin: 0 5px;
+      }
+      .slick-slide img {
+        width: 100%;
+        height: auto;
+      }
+      .slick-prev, .slick-next {
+        z-index: 1;
+      }
+      .slick-prev:before, .slick-next:before {
+        color: #000;
+      }
+      .slick-slide {
+        transition: all ease-in-out .3s;
+        opacity: .2;
+      }
+      .slick-active {
+        opacity: 1;
+      }
+      .slick-current {
+        opacity: 1;
+      }
+      .thumb {
+        margin: 20px 0 0;
+      }
+      .thumb .slick-slide {
+        cursor: pointer;
+      }
+      .thumb .slick-slide:hover {
+        opacity: .7;
+      }
+      
+      /*==================
+      .full-screen
+      ==================*/
+      
+      .full-screen_one .slick-list {
+        overflow: visible;
+      }
+      .full-screen_one.slider {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+   
+
+      .sliderArea2 {
+        max-width: 30%;
+        margin: 0 auto;
+        padding: 0 25px;
+      }
+      .sliderArea2.w300 {
+        max-width: 300px;
+      }
+      .slick-slide2 {
+        margin: 0 5px;
+      }
+      .slick-slide2 img {
+        width: 100%;
+        height: auto;
+      }
+      .slick-slide2 {
+        transition: all ease-in-out .3s;
+        opacity: .2;
+      }
+  
+      .thumb .slick-slide2 {
+        cursor: pointer;
+      }
+      .thumb .slick-slide2:hover {
+        opacity: .7;
+      }
+      
+</style>
+<body>
+    <div class="sliderArea2">
+        <div class="full-screen-o regular">
+
+        <li><img src="1.jpg" alt="img01"></li>
+        <li><img src="2.jpg" alt="img02"></li>
+        <li><img src="3.jpg" alt="img03"></li>
+       
+    </div>
+</div>
+<hr>
+    <div class="sliderArea">
+        <div class="full-screen-o slider">
+
+        <li><img src="1.jpg" alt="img01"></li>
+        <li><img src="2.jpg" alt="img02"></li>
+        <li><img src="3.jpg" alt="img03"></li>
+        <li><img src="1.jpg" alt="img01"></li>
+        <li><img src="2.jpg" alt="img02"></li>
+        <li><img src="3.jpg" alt="img03"></li>
+        <li><img src="1.jpg" alt="img01"></li>
+        <li><img src="2.jpg" alt="img02"></li>
+        <li><img src="3.jpg" alt="img03"></li>
+        <li><img src="1.jpg" alt="img01"></li>
+        <li><img src="2.jpg" alt="img02"></li>
+        <li><img src="3.jpg" alt="img03"></li>
+    </div>
+</div>
+</body>
+<script>
+    $('.slider').slick({
+        centerMode: true,
+        centerPadding: '5%',
+        speed: 1000,
+        
+        infinite: true,
+        autoplay:true, // 自動再生を設定
+        autoplaySpeed:1000, // スライド切り替えの時間を設定
+        dots:true, // インジケーターを表示
+        slidesToShow: 6,
+        slidesToScroll: 6,
+        responsive: [{
+             breakpoint: 768,
+                  settings: {
+                       slidesToShow: 3,
+                       slidesToScroll: 3,
+             }
+        },{
+             breakpoint: 480,
+                  settings: {
+                       slidesToShow: 2,
+                       slidesToScroll: 2,
+                  }
+             }
+        ]
+   });
+ 
+   
+</script>
+<script>
+    $(document).on('ready', function() {
+        $(".regular").slick({
+          autoplay: true,
+          autoplaySpeed: 1000,
+          dots: true,
+        });
+      });
+</script>
+
+</html>

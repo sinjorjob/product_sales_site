@@ -1,0 +1,7 @@
+
+<div class="container">
+    <a href="{% url 'ec_site:item_list' %}" class="badge badge-info">全商品</a>
+    {% for category in category_list %}
+    <a href="{% url 'ec_site:category' category.name %}" class="badge badge-info">{{category}}</a>
+    {% endfor %}
+</div>

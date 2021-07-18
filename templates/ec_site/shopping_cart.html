@@ -1,0 +1,175 @@
+{% extends "ec_site/base.html" %}
+{% block content %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+
+{% if object.cart_items.all %}
+<div class="card shopping-cart">
+    <div class="card-body">
+        {% for cart_item in object.cart_items.all %}
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-2 text-center">
+                <img class="img-responsive" src="{{ cart_item.product.thumbnail.url }}" alt="prewiew" width="120"
+                    height="80">
+            </div>
+            <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                <h4 class="product-name"><strong>{{ cart_item.product.name }}</strong></h4>
+                <h4>
+                    <small>{{ cart_item.product.description }}</small>
+                </h4>
+            </div> <!-- col -->
+            <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
+                    <h6><strong>{{ cart_item.product.price| intcomma }} <span class="text-muted">x</span></strong></h6>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <div class="quantity">
+                        <input name="amount" pk="{{ cart_item.pk }}" type="number" class="form-control" step="1"
+                            max="99" min="1" title="Qty" class="qty" size="4" value="{{ cart_item.amount }}">
+                    </div>
+                </div>
+                <div class="col-2 col-sm-2 col-md-2 text-right">
+                    <button name="delete" pk="{{ cart_item.pk }}" type="button" class="btn btn-outline-danger btn-xs">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div> <!-- col -->
+        </div> <!-- row -->
+        {% endfor %}
+        <div class="float-right">合計金額: <b> {{ object.total_price| intcomma }}円</b></div>
+
+    </div> <!-- card body -->
+    <hr>
+    <!--　お届け先住所情報の入力-->
+ <!--    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group pt-3 mx-2">
+            <label for="name">お名前</label>
+            <input required class="form-control col-md-4" type="text" placeholder="お名前" name="name" />
+        </div>
+        <div class="form-group pt-3 mx-2">
+            <label for="email">アドレス</label>
+            <input required class="form-control col-md-4 " type="text" placeholder="example@company.com" name="email" />
+        </div>
+        <div class="form-group pt-3 mx-2">
+            <label for="address">住所</label>
+            <input required class="form-control col-md-8 " type="text" placeholder="住所を記載" name="address" />
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group pt-3 mx-2">
+                    <label for="zip">郵便番号</label>
+                    <input required class="form-control" type="text" placeholder="123-1234" name="zip" />
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mt-5">お支払い</button>
+        </div>
+    </form> -->
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in form %}
+        {% if field.label == "氏名" %}
+
+        <div class="form-group pt-3 mx-2">
+            <label for="{{ field.label}}">{{ field.label}}</label>
+            {% render_field field class="form-control col-md-2" %}
+         {% elif field.label == "メールアドレス" %}
+        </div>
+        <div class="form-group pt-3 mx-2">
+            <label for="{{ field.label}}">{{ field.label}}</label>
+            {% render_field field class="form-control col-md-2" %}
+        </div>
+        {% elif field.label == "郵便番号" %}
+        <div class="form-group pt-3 mx-2">
+            <label for="{{ field.label}}">{{ field.label}}</label>
+            {% render_field field class="form-control col-md-2" %}
+            <font color="red">{{field.help_text}}</font>
+        </div>
+        {% elif field.label == "住所" %}
+        <div class="form-group pt-3 mx-2">
+            <label for="{{ field.label}}">{{ field.label}}</label>
+            {% render_field field class="form-control col-md-8" %}
+            {{field.help_text}}
+        </div>
+
+            {% endif %}
+            {% endfor %}
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary mt-5">お支払い</button>
+        </div>
+    </form>
+</div>
+
+{% else %}
+<p>カートが空です</p>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+<script>
+    function call_update_amount(_pk, _amount) {
+        return $.ajax({
+            url: '{% url "ec_site:update_cart_item_amount" %}',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                cart_item_pk: _pk,
+                amount: _amount
+            }
+        });
+    }
+    function call_delete_item(_pk) {
+        return $.ajax({
+            url: '{% url "ec_site:delete_cart_item" %}',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                cart_item_pk: _pk
+            }
+        });
+    }
+
+    $(function () {
+        var $input_amount = $('input[name="amount"]');
+        var $delete_button = $('button[name="delete"]');
+        $input_amount.on('change', function () {
+            var cart_item_pk = $(this).attr('pk');
+            var new_amount = parseInt($(this).val());
+            call_update_amount(cart_item_pk, new_amount)
+                .done((data) => {
+                    if (data.success) {
+                        location.reload();
+                        return;
+                    }
+                    alert(data.error);
+                })
+                .fail((ata, textStatus, xhr) => {
+                    alert(xhr);
+                });
+        });
+        $delete_button.on('click', function () {
+            var cart_item_pk = $(this).attr('pk');
+            call_delete_item(cart_item_pk)
+                .done((data) => {
+                    if (data.success) {
+                        location.reload();
+                        return;
+                    }
+                    alert(data.error);
+                })
+                .fail((ata, textStatus, xhr) => {
+                    alert(xhr);
+                });
+        });
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "ec_site/base.html" %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+<link href="{% static 'css/slick.css' %}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+<section class="section-main bg padding-top-sm">
+
+    <div class="container">
+        <div class="row-sm">
+            <div class="col-md-8">
+                <div class="sliderArea">
+                    <div class="full-screen-o regular">
+
+                        <li><img src="{% static 'images/banners/slide4.jpg' %}" alt="img01"></li>
+                        <li><img src="{% static 'images/banners/slide5.jpg' %}" alt="img02"></li>
+                        <li><img src="{% static 'images/banners/slide6.jpg' %}" alt="img03"></li>
+
+                    </div>
+                </div>
+            </div> <!-- col.// -->
+            <aside class="col-md-4">
+                <h4>人気商品TOP3</h4>
+                <div class="card mb-3">
+                    <figure class="itemside">
+                        <div class="aside">
+                            <div class="img-wrap p-2 border-right"><img class="img-sm"
+                                    src="{% static 'images/items/bag-01.jpg' %}"></div>
+                        </div>
+                        <figcaption class="text-wrap align-self-center">
+                            <h6 class="title">売上No1アイテム♪ </h6>
+                            <a href="#">詳細</a>
+                        </figcaption>
+                    </figure>
+                </div> <!-- card.// -->
+                <div class="card mb-3">
+                    <figure class="itemside">
+                        <div class="aside">
+                            <div class="img-wrap p-2 border-right"><img class="img-sm"
+                                    src="{% static 'images/items/bag-02.jpg' %}"></div>
+                        </div>
+                        <figcaption class="text-wrap align-self-center">
+                            <h6 class="title">売上No2アイテム♪</h6>
+                            <a href="#">詳細</a>
+                        </figcaption>
+                    </figure>
+                </div> <!-- card.// -->
+
+                <div class="card">
+                    <figure class="itemside">
+                        <div class="aside">
+                            <div class="img-wrap p-2 border-right"><img class="img-sm"
+                                    src="{% static 'images/items/bag-03.jpg' %}"></div>
+                        </div>
+                        <figcaption class="text-wrap align-self-center">
+                            <h6 class="title">売上No3アイテム♪ </h6>
+                            <a href="#">詳細</a>
+                        </figcaption>
+                    </figure>
+                </div> <!-- card.// -->
+<!-- PayPal Logo --><table border="0" cellpadding="10" cellspacing="0" align="center"><tr><td align="center"><a href="#" onclick="javascript:window.open('https://www.paypal.com/jp/webapps/mpp/logo/about','olcwhatispaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=900, height=700');"><img src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/jp/developer/203x80_b.png" border="0" alt="ペイパル｜カード情報も、口座番号も、ペイパルが守ります。｜VISA, Mastercard, JCB, American Express, Union Pay, 銀行"></a></td></tr></table><!-- PayPal Logo -->
+            </aside>
+        </div>
+    </div> <!-- container .//  -->
+</section>
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <div class="card">
+            <div class="card-body">
+
+                <header class="section-heading">
+                    <h3 class="title-section">EC shopping sites Unusual</h3>
+                </header>
+
+                <article>
+                    <p>
+                        このECサイトでは職人が１つ１つハンドメイドで制作した商品を多数扱っております。<br>
+                        きっとあなたのお気に入りの逸品が見つかると思います。 </p>
+                </article>
+            </div>
+        </div>
+
+                <div class="sliderArea mt-3">
+                    <div class="full-screen-o slider slick-slide3">
+
+                        {% for object in object_list %}
+
+                        <li><a href="{% url 'ec_site:item_detail' object.pk %}">
+                            <img src="{{ object.thumbnail.url }}"></a></li>
+
+                        {% endfor %}
+                    </div>
+                </div> <!-- col.// -->
+     
+    </div> <!-- container .//  -->
+</section>
+<script src="{% static 'js/slick.js' %}"></script>
+
+{% endblock %}

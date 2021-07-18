@@ -1,0 +1,21 @@
+/*class=graph_halfの要素を横幅100%のレイアウトで配置する。*/
+.graph_half {
+	display: flex;
+	flex-wrap: wrap; 
+}
+
+/*class=graph_half内のdiv要素は横幅の領域を半分にする。*/
+.graph_half div{
+	width: 50%;
+}
+
+/*class=graph_fullの要素を横幅100%のレイアウトで配置する。*/
+.graph_full {
+	display: flex;
+	flex-wrap: wrap; 
+}
+
+/*class=graph_full内のdiv要素は横幅の領域を100%にする。*/
+.graph_half div{
+	width: 100%;
+}

@@ -1,0 +1,42 @@
+{% extends 'sales_management/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load utils %}
+
+{% block title %}TOP画面{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="#">TOPメニュー</a></li>
+<li class="breadcrumb-item"><a href="{% url 'unshipped_order' %}">オーダー管理</a></li>
+<li class="breadcrumb-item active" aria-current="page">売上分析</li>
+{% endblock %}
+
+
+{% block contents %}
+
+
+<div class="row">
+    <div class="col-12 col-xl-12">
+        <div class="row">
+
+            <div class="card card-body shadow border-0 table-wrapper table-responsive">
+             
+                {% autoescape off %}
+                    {{plot_fig_pie}}
+                {% endautoescape %}
+                <hr>
+                {% autoescape off %}
+                {{plot_fig_line}}
+                {% endautoescape %}
+            
+         
+                    <div class="col text-end">
+                        <a href="{% url 'order_management' %}" class="btn btn-sm btn-primary">一覧画面へ戻る</a>
+                    </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

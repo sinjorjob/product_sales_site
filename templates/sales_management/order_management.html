@@ -1,0 +1,179 @@
+{% extends 'sales_management/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load utils %}
+{% load widget_tweaks %}
+
+{% block title %}TOP画面{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="#">TOPメニュー</a></li>
+<li class="breadcrumb-item"><a href="#">オーダー管理</a></li>
+<li class="breadcrumb-item active" aria-current="page">注文データ管理画面</li>
+{% endblock %}
+{% block contents %}
+<style>
+    .search-button {
+        display: flex;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+        align-items: center;
+        padding: 0.75rem;
+        border-top: 0.0625rem solid #E5E7EB;
+        border-bottom-right-radius: 0.4375rem;
+        border-bottom-left-radius: 0.4375rem;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12 col-xl-12">
+        <div class="row">
+            
+            <h3>注文データ管理画面</h3>
+            <form method="GET">
+               
+            <!-- モーダル切替表示-->
+            <div class="search-button">
+            <button type="button" class="btn btn-primary fmxw-200 ml-3" data-bs-toggle="modal"
+                data-bs-target="#modal-search">検索</button>
+            </div>
+            <!-- 出荷確認用モーダル表示-->
+            <div class="modal fade" id="modal-search" tabindex="-1" role="dialog" aria-labelledby="modal-search"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="h3 modal-title">絞込み検索画面</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{filter.form }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary">検索</button>
+                            <button type="button" class="btn btn-sm btn-primary"
+                                data-bs-dismiss="modal">閉じる</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <div class="card card-body shadow border-0 table-wrapper table-responsive mt-3">
+                <!--  <div class="d-flex mb-3"><select class="form-select fmxw-200" aria-label="Message select example">
+                        <option selected="selected">日付を選択</option>
+                        <option value="1">Send Email</option>
+                        <option value="2">Change Group</option>
+                        <option value="3">Delete User</option>
+                    </select> <button class="btn btn-sm px-3 btn-secondary ms-3">検索</button></div> -->
+                <table class="table user-table table-hover table-striped align-items-center">
+                    <thead>
+                        <tr>
+                            <th class="border-bottom">注文ID</th>
+                            <th class="border-bottom">注文日</th>
+                            <th class="border-bottom">支払いステータス</th>
+                            <th class="border-bottom">出荷ステータス</th>
+                            <th class="border-bottom">詳細</th>
+                            <th class="border-bottom">売上金額</th>
+                            <th class="border-bottom">氏名</th>
+                            <th class="border-bottom">アドレス</th>
+                            <th class="border-bottom">郵便番号</th>
+                            <th class="border-bottom">住所</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- djangoループ処理-->
+                        {% for order in object_list %}
+                        <tr>
+                            <td><a href="https://demo.themesberg.com/volt-pro/pages/users.html#"
+                                    class="d-flex align-items-center">
+                                    <div class="d-block"><span class="fw-bold">{{ order.pk }}</span>
+                                    </div>
+                                </a></td>
+                           　<td><span class="fw-normal">{{ order.created_date }}</span></td>
+                            {% if order.is_paid %}
+                            <td><span class="fw-normal d-flex align-items-center"><svg
+                                        class="icon icon-xxs text-success me-1" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>済</span></td>
+                            {% else %}
+                            <td><span class="fw-normal d-flex align-items-center"><svg
+                                        class="icon icon-xxs text-danger me-1" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>未</span></td>
+                            {% endif %}
+                            {% if order.is_shipped %}
+                            <td><span class="fw-normal d-flex align-items-center"><svg
+                                        class="icon icon-xxs text-success me-1" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>済</span></td>
+                            {% else %}
+                            <td><span class="fw-normal d-flex align-items-center"><svg
+                                        class="icon icon-xxs text-danger me-1" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>未</span></td>
+                            {% endif %}
+                            <td><a href="{% url 'order_detail' order.pk %}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg></a></td>
+                            <td><span class="fw-normal text-danger">{{ order.price| intcomma }}円</span></td>
+                            <td><span class="fw-normal d-flex align-items-center">{{ order.name }}</span></td>
+                            <td><span class="fw-normal text-info">{{ order.email }}</span></td>
+                            <td><span class="fw-normal d-flex align-items-center">〒
+                                    {{ order.zip_code | zip_code1}}-{{order.zip_code | zip_code2}}</span></td>
+                            <td><span class="fw-normal">{{ order.address }}</span></td>
+                        </tr>
+                        <!-- djagnoループここまで-->
+                        {% endfor %}
+
+                    </tbody>
+
+
+                </table>
+                <!-- pagenate -->
+                <hr>
+                {% include 'sales_management/page-filters.html' %}
+
+
+                <!--               <div
+                    class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination mb-0">
+                            <li class="page-item"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">Previous</a></li>
+                            <li class="page-item"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">1</a></li>
+                            <li class="page-item active"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">2</a></li>
+                            <li class="page-item"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">3</a></li>
+                            <li class="page-item"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">4</a></li>
+                            <li class="page-item"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">5</a></li>
+                            <li class="page-item"><a class="page-link"
+                                    href="https://demo.themesberg.com/volt-pro/pages/users.html#">Next</a></li>
+                        </ul>
+                    </nav>
+                    <div class="fw-normal small mt-4 mt-lg-0">Showing <b>5</b> out of <b>25</b> entries</div>
+                </div> -->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "ec_site/base.html" %}
+{% block content %}
+
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-5 col-sm-12 p-4 text-center">
+            <h1>決済が完了しました!</h1>
+            <a class="btn btn-primary mb-3 mt-5" href="{% url 'ec_site:lp' %}" role="button">TOPページへ戻る</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

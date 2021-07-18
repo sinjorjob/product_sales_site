@@ -1,0 +1,25 @@
+{% extends "ec_site/base.html" %}
+{% block content %}
+{% load static %}
+<!-- カテゴリ一覧の表示 -->
+{% include 'ec_site/widgets/side_category.html' %}
+
+<div class="row-sm  mt-4">
+    {% for object in object_list %}
+
+    <div class="col-md-3">
+        <figure class="card card-product">
+            <div class="img-wrap"> <img src="{{ object.thumbnail.url }}"></div>
+            <figcaption class="info-wrap">
+                <h6 class="title "><a href="{% url 'ec_site:item_detail' object.pk %}">{{ object.name }}</a></h6>
+                <div class="price-wrap">
+                    <span class="price-new">{{ object.price }}円</span>
+                </div> <!-- price-wrap.// -->
+
+            </figcaption>
+        </figure> <!-- card // -->
+    </div> <!-- col // -->
+
+    {% endfor %}
+</div>
+{% endblock %}
